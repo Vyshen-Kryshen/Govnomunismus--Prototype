@@ -1,0 +1,72 @@
+{% extends 'parent.html' %}
+
+
+{% block title %}
+homemain
+{% endblock %}
+
+
+{% block body %}
+<table border="0", align="center">
+    <tr>
+        <th colspan="2">
+            <h1>
+                Привет товарищ, NN, ты на главной странице!
+            </h1>
+        </th>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/reg" style="font-size: 22px;">
+                Регистрация
+            </a>
+        </td>
+        <td align="left">
+            <a href="/ent" style="font-size: 22px;">
+                Вход
+            </a>
+        </td>
+    </tr>
+</table>
+{% for i in range(20) %}
+<br>
+{% endfor %}
+<table border="1" align="center" style="border-radius: 5%; background-color: snow;">
+    <tr style="border-radius: 10%; background-color: snow;">
+        <th style="border-radius: 15%; background-color: snow;">
+            <p>
+                <h3>
+                    Список имён участников:
+                </h3>
+            </p>
+        </th>
+        <th style="border-radius: 15%; background-color: snow;">
+            <p>
+                <h3>
+                    Список возрастов участников:
+                </h3>
+            </p>
+        </th>
+        <th style="border-radius: 15%; background-color: snow;">
+            <p>
+                <h3>
+                    Список давности более недели у участников:
+                </h3>
+            </p>
+        </th>
+    </tr>
+    {% for user in users %}
+        <tr style="border-radius: 10%; background-color: snow;">
+            <td align="center" style="border-radius: 15%; background-color: snow;">
+                {{ user[:][1] }}
+            </td>
+            <td align="center" style="border-radius: 15%; background-color: snow;">
+                {{ user[:][3] }}
+            </td>
+            <td align="center" style="border-radius: 15%; background-color: snow;">
+                {{ user[:][4] }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

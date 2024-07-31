@@ -1,0 +1,47 @@
+{% extends "parent.html" %}
+
+
+{% block title %}
+entern_into
+{% endblock %}
+
+
+{% block body %}
+<table border="0", align="center">
+    <tr>
+        <th>
+            <p>
+                <h1>
+                    Ты у входа!
+                </h1>
+            </p>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <form method="POST">
+                <p>
+                    <label>Подтвердите ваше имя</label>
+                    <input type="text", id="0" name="username">
+                </p>
+                <p>
+                    <label>Подтвердите ваш логин</label>
+                    <input type="text", id="1" name="login">
+                </p>
+                <p>
+                    <input type="submit", id="2", name="button">
+                </p>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>
+                <a href="/main" style="font-size: 22px;">
+                    Обратно
+                </a>
+            </p>
+        </td>
+    </tr>
+</table>
+{% endblock %}
