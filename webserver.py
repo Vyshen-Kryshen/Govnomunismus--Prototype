@@ -1,6 +1,8 @@
 """
 ## Прототип сайта.
 """
+
+
 from dataclasses import dataclass
 from flask import render_template, url_for, Flask, request
 from mysql.connector import connect, Error
@@ -58,7 +60,7 @@ def database_connection(user_object: User | tuple[str, str] | None, mode: str = 
 @prototype.route("/main/<string:username>", methods=["GET"])
 def main_handler(username: str = "NN") -> str:
     """
-    Обработчик главной страницы.
+    #### Обработчик главной страницы.
     """
     page: str = ""
     with open("templates\main.html", "r", encoding="UTF-8") as file:
@@ -71,7 +73,7 @@ def main_handler(username: str = "NN") -> str:
 @prototype.route("/reg", methods=["GET", "POST"])
 def registration_handler() -> str:
     """
-    Обработчик страницы для регистрации.
+    #### Обработчик страницы для регистрации.
     """
     if request.method == "POST":
         boolanswer: bool = False
@@ -86,7 +88,7 @@ def registration_handler() -> str:
 @prototype.route("/ent", methods=["GET", "POST"])
 def enter_handler() -> str:
     """
-    Обработчик входной странички.
+    #### Обработчик входной странички.
     """
     if request.method == "POST":
         username: str = request.form["username"]
@@ -100,8 +102,8 @@ def enter_handler() -> str:
 
 def run_protosite(do_debug: bool = False) -> None:
     """
-    :param do_debug: принимает логическое значение.
     Эта функция запускает сервер.
+    :param do_debug: принимает логическое значение.
     """
     prototype.run("localhost", 7000, debug=do_debug)
 

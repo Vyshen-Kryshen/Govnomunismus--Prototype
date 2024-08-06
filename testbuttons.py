@@ -1,6 +1,9 @@
 """
-
+## Модуль графических кнопок.
 """
+
+
+import os
 import webbrowser
 import requests
 import pygame
@@ -11,6 +14,8 @@ pygame.init()
 class CommonButton(object):
     """
     #### Прототипированный класс обычной кнопки.
+
+    Реализует простое кнопочное поведение виджета.
     """
     width: int = 0
     height: int = 0
@@ -26,11 +31,14 @@ class CommonButton(object):
         self.position = position
         self.has_been_click: bool = False
 
-        response: requests.Response = requests.get("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQa57563qvcJ0uB9eRc7oVW1DBd2WQSE5xYA&s")
-        with open(r"assets\butpng.png", "wb") as file:
-            file.write(response.content)
+        self.path: str = r"assets\butpng.png"
 
-        self.texture: pygame.Surface = pygame.image.load(r"assets\butpng.png")
+        if not os.path.exists(self.path):
+            response: requests.Response = requests.get("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQa57563qvcJ0uB9eRc7oVW1DBd2WQSE5xYA&s")
+            with open(self.path, "wb") as file:
+                file.write(response.content)
+
+        self.texture: pygame.Surface = pygame.image.load(self.path)
         self.texture = pygame.transform.scale(self.texture, (self.width, self.height))
         self.texture.set_colorkey(pygame.Color(255, 255, 255))
 
@@ -62,7 +70,7 @@ class CommonButton(object):
                 self.has_been_click = False
                 self.__i = 0.0
 
-    def draw(self, window: pygame.Surface, text: pygame.Surface = None) -> None:
+    def draw(self, window: pygame.Surface, text: pygame.Surface = None, vert_or_hor: str = None, to_mark: bool = False) -> None:
         """
         :param window: принимает экземпляр типа 'pygame.Surface'.
         :param text: принимает в качестве аргумента текстовую поверхность типа 'pygame.Surface'.
@@ -70,12 +78,21 @@ class CommonButton(object):
         """
         window.blit(self.texture, self.position)
         if text:
-            window.blit(text, (self.position[0], self.position[1] - self.height // 2))
+            if vert_or_hor == "hor" or not vert_or_hor:
+                if to_mark:
+                    pygame.draw.rect(window, "darkcyan", text.get_rect(topleft=(self.position[0], self.position[1] - self.height // 2)), 0)
+                window.blit(text, (self.position[0], self.position[1] - self.height // 2))
+            elif vert_or_hor == "vert":
+                if to_mark:
+                    pygame.draw.rect(window, "darkcyan", text.get_rect(topleft=(self.position[0] + self.height * 2.25, self.position[1])), 0)
+                window.blit(text, (self.position[0] + self.height * 2.25, self.position[1]))
 
 
 class ButtonWithLink(CommonButton):
     """
     #### Класс прототипированной кнопки с ссылкой на сайт.
+
+    Пожалуй единственный класс-наследник имеющий столь узкую специализацию.
     """
 
     def __init__(self, width: int, height: int, position: tuple[int, int]) -> None:
